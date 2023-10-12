@@ -1,18 +1,19 @@
 version: "3.8"
 
 services:
-  db_employee_management:
+  db_employee:
     image: mysql:8.1.0
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASS: ${DB_PASS}
-      DB_NAME: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_INITDB_SKIP_TZINFO: 1
     restart: always
     ports:
       - "${DB_PORT:-3306}:3306"
-    container_name: db_employee_management
+    container_name: db_employee
     volumes:
       - ./db:/docker-entrypoint-initdb.d
       - ./db/mysql_data:/var/lib/mysql
@@ -21,15 +22,15 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.10"
-          memory: 180M
+          cpus: "0.30"
+          memory: 250M
         reservations:
           cpus: "0.1"
           memory: 128M
 
   phpmyadmin:
     container_name: phpmyadmin
-    image: phpmyadmin:5.2.1-fpm-alpine
+    image: phpmyadmin/phpmyadmin:5.2.1-fpm-alpine
     environment:
       PMA_HOST: ${DB_HOST}
       PMA_PORT: 3306
@@ -38,7 +39,7 @@ services:
     networks:
       - net_employee
     depends_on:
-      - db_employee_management
+      - db_employee
     restart: unless-stopped
     deploy:
       resources:
@@ -60,7 +61,8 @@ services:
     networks:
       - net_employee
     depends_on:
-      - db_employee_management
+      - db_employee
+      - phpmyadmin
     ports:
       - "${PORT:-8090}:8080"
     deploy:
