@@ -6,8 +6,12 @@ RUN mvn clean package -DskipTests
 
 
 FROM openjdk:22-ea-17-jdk-slim
+
 WORKDIR /usr/app
 COPY --from=build ["/usr/app/target/*.jar" ,"./app.jar"]
-EXPOSE 9091
+
+ARG PORT=8080
+ENV PORT=${PORT}
+EXPOSE ${PORT}
 ENTRYPOINT ["java", "-jar"]
 CMD ["app.jar"]
