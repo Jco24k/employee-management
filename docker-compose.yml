@@ -64,7 +64,7 @@ services:
       - db_employee
       - phpmyadmin
     ports:
-      - "${PORT:-8090}:8080"
+      - "${PORT:-8080}:${PORT:-8080}"
     deploy:
       resources:
         limits:
