@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /employee
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc
+  pathsToMatch: /**
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_employee_management?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect:
+          storage_engine: innodb
+  data:
+    jpa:
+      repositories:
+        enabled: true
+environment:
+  user-admin: admin@admin.com
+  pass-admin: adminPasword123
+  role-admin: admin-all-role
+  path-permission: assets/permissions.json
+  secret-key: 76397924423F4528482B4D6251655468576D5A7134743777217A25432A46294A
+  expiration-key: 86400000
