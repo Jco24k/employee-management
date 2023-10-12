@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  db_employee_management:
+    image: mysql:8.1.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_employee_management
+    restart: always
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    container_name: db_employee_management
+    volumes:
+      - ./db_employee_management/mysql_data:/var/lib/mysql
+    networks:
+      - net_employee
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:5.2.1-fpm-alpine
+    environment:
+      PMA_HOST: ${DB_HOST}
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    networks:
+      - net_employee
+    depends_on:
+      - db_employee_management
+
+  app_employee_management:
+    build:
+      context: .
+    container_name: employee_management
+    env_file:
+      - .env
+    volumes:
+      -  ~/.m2/repository:/root/.m2/repository
+    networks:
+      - net_employee
+    depends_on:
+      - db_employee_management
+    ports:
+      - "${PORT:-8090}:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.30"
+          memory: 250M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+
+
+
+networks:
+  net_employee:
+    driver: bridge
+    driver_opts:
+      com.docker.netwwork.enable_ipv6: "true"
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: 192.168.0.1/24
+          gateway: 192.168.0.1
+        -
+          subnet: "2001:0db8:85a3:0000:0000:8a2e:0370:7334/64"
+          gateway: "2001:0db8:85a3::1"
+
