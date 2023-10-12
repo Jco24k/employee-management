@@ -4,16 +4,28 @@ services:
   db_employee_management:
     image: mysql:8.1.0
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: db_employee_management
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
     restart: always
     ports:
       - "${DB_PORT:-3306}:3306"
     container_name: db_employee_management
     volumes:
-      - ./db_employee_management/mysql_data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
+      - ./db/mysql_data:/var/lib/mysql
     networks:
       - net_employee
+    deploy:
+      resources:
+        limits:
+          cpus: "0.10"
+          memory: 180M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
 
   phpmyadmin:
     container_name: phpmyadmin
@@ -27,6 +39,15 @@ services:
       - net_employee
     depends_on:
       - db_employee_management
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.30"
+          memory: 220M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
 
   app_employee_management:
     build:
