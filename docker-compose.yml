@@ -15,7 +15,7 @@ services:
       - "${DB_PORT:-3306}:3306"
     container_name: db_employee
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
+      - ./db/init.sh:/docker-entrypoint-initdb.d/init.sh
       - ./db/mysql_data:/var/lib/mysql
     networks:
       - net_employee
@@ -30,7 +30,7 @@ services:
 
   phpmyadmin:
     container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin:5.2.1-fpm-alpine
+    image: phpmyadmin/phpmyadmin:5.0.2
     environment:
       PMA_HOST: ${DB_HOST}
       PMA_PORT: 3306
