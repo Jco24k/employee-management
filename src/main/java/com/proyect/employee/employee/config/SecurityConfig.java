@@ -1,8 +1,8 @@
 package com.proyect.employee.employee.config;
 
+import com.proyect.employee.employee.entities.enums.EPermission;
 import com.proyect.employee.employee.security.JwtAuthenticationFilter;
 import com.proyect.employee.employee.security.UserDetailServiceImpl;
-import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,24 +34,23 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( authRequest -> authRequest
-//                        .requestMatchers(GET, String.format("%s/**",PathController.PERMISSION)).hasAnyAuthority(EPermission.READ_PERMIT.getCode(), EPermission.SUPER_ADMIN.getCode())
-//                        .requestMatchers(PATCH, String.format("%s/**",PathController.PERMISSION)).hasAnyAuthority(EPermission.UPDATE_PERMIT.getCode(), EPermission.SUPER_ADMIN.getCode())
-//
-//                        .requestMatchers(GET, String.format("%s/**",PathController.USER)).hasAnyAuthority(EPermission.READ_USER.getCode(), EPermission.SUPER_ADMIN.getCode())
-//                        .requestMatchers(POST, String.format("%s/**",PathController.USER)).hasAnyAuthority(EPermission.CREATE_USER.getCode(), EPermission.SUPER_ADMIN.getCode())
-//                        .requestMatchers(PATCH, String.format("%s/**",PathController.USER)).hasAnyAuthority(EPermission.UPDATE_USER.getCode(), EPermission.SUPER_ADMIN.getCode())
-//                        .requestMatchers(DELETE, String.format("%s/**",PathController.USER)).hasAnyAuthority(EPermission.DELETE_USER.getCode(), EPermission.SUPER_ADMIN.getCode())
-//
-//                        .requestMatchers(GET, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.READ_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
-//                        .requestMatchers(POST, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.CREATE_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
-//                        .requestMatchers(PATCH, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.UPDATE_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
-//                        .requestMatchers(DELETE, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.DELETE_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
-//
-//                        .requestMatchers(POST,String.format("%s/**",PathController.AUTH)).permitAll()
-//
-//                        .requestMatchers("/doc/**","/swagger-ui/**","/v3/**").permitAll()
-//                        .anyRequest().authenticated()
-                                .anyRequest().permitAll()
+                        .requestMatchers(GET, String.format("%s/**",PathController.PERMISSION)).hasAnyAuthority(EPermission.READ_PERMIT.getCode(), EPermission.SUPER_ADMIN.getCode())
+                        .requestMatchers(PATCH, String.format("%s/**",PathController.PERMISSION)).hasAnyAuthority(EPermission.UPDATE_PERMIT.getCode(), EPermission.SUPER_ADMIN.getCode())
+
+                        .requestMatchers(GET, String.format("%s/**",PathController.USER)).hasAnyAuthority(EPermission.READ_USER.getCode(), EPermission.SUPER_ADMIN.getCode())
+                        .requestMatchers(POST, String.format("%s/**",PathController.USER)).hasAnyAuthority(EPermission.CREATE_USER.getCode(), EPermission.SUPER_ADMIN.getCode())
+                        .requestMatchers(PATCH, String.format("%s/**",PathController.USER)).hasAnyAuthority(EPermission.UPDATE_USER.getCode(), EPermission.SUPER_ADMIN.getCode())
+                        .requestMatchers(DELETE, String.format("%s/**",PathController.USER)).hasAnyAuthority(EPermission.DELETE_USER.getCode(), EPermission.SUPER_ADMIN.getCode())
+
+                        .requestMatchers(GET, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.READ_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
+                        .requestMatchers(POST, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.CREATE_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
+                        .requestMatchers(PATCH, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.UPDATE_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
+                        .requestMatchers(DELETE, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.DELETE_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
+
+                        .requestMatchers(POST,String.format("%s/**",PathController.AUTH)).permitAll()
+
+                        .requestMatchers("/doc/**","/swagger-ui/**","/v3/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
