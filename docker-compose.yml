@@ -64,12 +64,12 @@ services:
       - db_employee
       - phpmyadmin
     ports:
-      - "${PORT:-8090}:8080"
+      - "${PORT:-8090}:${PORT:-8080}"
     deploy:
       resources:
         limits:
-          cpus: "0.30"
-          memory: 250M
+          cpus: "0.40"
+          memory: 350M
         reservations:
           cpus: "0.1"
           memory: 128M
