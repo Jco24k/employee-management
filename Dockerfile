@@ -20,5 +20,4 @@ ARG PORT=8080
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
-ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["$FILE"]
+ENTRYPOINT ["./wait-for-it.sh"]
