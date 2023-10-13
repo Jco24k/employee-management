@@ -17,6 +17,5 @@ deploy-app:
     - echo "PATH_FILE_PERMISSION=$PATH_FILE_PERMISSION" >> .env
   script:
     - docker compose -f docker-compose.yml up -d --build
-
 include:
   template: SAST.gitlab-ci.yml
