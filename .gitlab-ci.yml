@@ -1,6 +1,11 @@
-image: docker:24.0.6
-stages:
-  - deploy
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
 deploy-app:
   stage: deploy
   before_script:
