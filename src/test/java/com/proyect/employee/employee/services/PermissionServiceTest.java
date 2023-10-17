@@ -56,7 +56,7 @@ class PermissionServiceTest {
     }
 
     @Test
-    void update() {
+    void update() throws Exception {
             Long id = 1L;
             UpdatePermissionDto permitDto = new UpdatePermissionDto();
             permitDto.setDescription("New Description");
