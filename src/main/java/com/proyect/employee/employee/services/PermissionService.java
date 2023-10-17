@@ -6,6 +6,8 @@ import com.proyect.employee.employee.exception.ResourceNotFoundException;
 import com.proyect.employee.employee.mappers.MapperNotNull;
 import com.proyect.employee.employee.repositories.PermissionRepository;
 import com.proyect.employee.employee.services.interfaces.IPermissionService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +17,10 @@ import java.util.Collection;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class PermissionService implements IPermissionService {
 
-    @Autowired
-    private PermissionRepository repository;
+    private final PermissionRepository repository;
 
     @Override
     @Transactional(readOnly = true)

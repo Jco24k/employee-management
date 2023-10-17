@@ -1,5 +1,6 @@
 package com.proyect.employee.employee.config;
 
+import com.github.javafaker.Faker;
 import com.proyect.employee.employee.entities.enums.EPermission;
 import com.proyect.employee.employee.security.JwtAuthenticationFilter;
 import com.proyect.employee.employee.security.UserDetailServiceImpl;
@@ -75,5 +76,9 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public Faker faker() {
+        return new Faker();
+    }
 
 }

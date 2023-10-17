@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -80,6 +84,10 @@ public class UserService implements IUserService {
         if(!userDto.getRoleIds().isEmpty()){
             userEntity.getRoles().clear();
             userEntity.setRoles(roleService.getRoles(new HashSet<>(userDto.getRoleIds())));
+        }
+        if(userDto.getPassword()!=null){
+            String password = userEntity.getPassword();
+            userEntity.setPassword(passwordEncoder.encode(password));
         }
     }
 

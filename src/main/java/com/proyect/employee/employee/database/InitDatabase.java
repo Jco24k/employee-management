@@ -11,14 +11,12 @@ import com.proyect.employee.employee.mappers.PermissionDataMapper;
 import com.proyect.employee.employee.repositories.PermissionRepository;
 import com.proyect.employee.employee.repositories.RoleRepository;
 import com.proyect.employee.employee.repositories.UserRepository;
-import com.proyect.employee.employee.seed.UserStub;
+import com.proyect.employee.employee.seed.stub.UserStub;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.core.io.Resource;
 
@@ -39,7 +37,7 @@ public class InitDatabase implements InitializingBean {
     private final PermissionDataMapper permissionDataMapper;
     private final ResourceLoader resourceLoader;
     private final EnvironmentConfig environmentConfig;
-    private final PasswordEncoder passwordEncoder;
+    private final UserStub userStub;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -101,7 +99,7 @@ public class InitDatabase implements InitializingBean {
         }
         User user = userRepository.findByUsername(userAdmin);
         if(user == null){
-            userRepository.save(UserStub.getStub(userAdmin,passwordEncoder.encode(passAdmin),Set.of(role)));
+            userRepository.save(userStub.getStub(userAdmin,passAdmin,Set.of(role)));
         }
         log.info("UserAdmin registered successfully");
     }
