@@ -33,14 +33,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@Valid @RequestBody CreateUserDto userDto){
+    public ResponseEntity<User> create(@Valid @RequestBody CreateUserDto userDto) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(userDto));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<User> patch(@PathVariable Long id,
-                                 @RequestBody @Validated(CreateUserDto.ValidatedUser.class) UpdateUserDto roleDto)
-             {
+                                 @RequestBody @Validated(CreateUserDto.ValidatedUser.class) UpdateUserDto roleDto) throws Exception {
         return ResponseEntity.ok(service.update(roleDto,id));
 
     }

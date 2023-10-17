@@ -8,5 +8,5 @@ public interface IPermissionService {
 
     Collection<Permission> findAll();
     Permission findOne(Long id);
-    Permission update(UpdatePermissionDto roleDto, Long id) ;
+    Permission update(UpdatePermissionDto roleDto, Long id) throws Exception;
 }

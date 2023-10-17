@@ -31,8 +31,7 @@ public class PermissionController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Permission> patch(@PathVariable Long id,
-                                 @RequestBody @Valid UpdatePermissionDto permissionDto)
-             {
+                                 @RequestBody @Valid UpdatePermissionDto permissionDto) throws Exception {
         return ResponseEntity.ok(service.update(permissionDto,id));
 
     }

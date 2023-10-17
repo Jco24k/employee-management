@@ -10,7 +10,7 @@ public interface IRoleService {
 
     Collection<Role> findAll();
     Role findOne(Long id);
-    Role create(CreateRoleDto roleDto) ;
-    Role update(UpdateRoleDto roleDto, Long id) ;
+    Role create(CreateRoleDto roleDto) throws Exception;
+    Role update(UpdateRoleDto roleDto, Long id) throws Exception;
     void delete(Long id) ;
 }

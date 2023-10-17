@@ -4,6 +4,7 @@ import com.proyect.employee.employee.dtos.create.CreateRoleDto;
 import com.proyect.employee.employee.dtos.update.UpdateRoleDto;
 import com.proyect.employee.employee.entities.Permission;
 import com.proyect.employee.employee.entities.Role;
+import com.proyect.employee.employee.exception.HandleExcepcion;
 import com.proyect.employee.employee.exception.ResourceNotFoundException;
 import com.proyect.employee.employee.mappers.MapperNotNull;
 import com.proyect.employee.employee.repositories.RoleRepository;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
@@ -27,6 +29,8 @@ public class RoleService implements IRoleService {
     private RoleRepository repository;
     @Autowired
     private PermissionService permissionService;
+
+    private final String nameEntity = "Role";
 
     @Override
     @Transactional(readOnly = true)
@@ -44,18 +48,30 @@ public class RoleService implements IRoleService {
 
     @Override
     @Transactional()
-    public Role create(CreateRoleDto roleDto) {
+    public Role create(CreateRoleDto roleDto) throws Exception {
         Role role = new Role();
         getAndVerifyDto(roleDto,role);
-        return repository.save(role);
+        try{
+            return repository.save(role);
+
+        }catch (DataIntegrityViolationException ex){
+            HandleExcepcion.SqlError(ex,nameEntity);
+            return null;
+        }
     }
 
     @Override
     @Transactional()
-    public Role update(UpdateRoleDto roleDto, Long id) {
+    public Role update(UpdateRoleDto roleDto, Long id) throws Exception {
         Role roleFound = findOne(id);
         getAndVerifyDto(roleDto,roleFound);
-        return repository.save(roleFound);
+        try{
+            return repository.save(roleFound);
+        }catch (DataIntegrityViolationException ex){
+            HandleExcepcion.SqlError(ex,nameEntity);
+            return null;
+        }
+
     }
 
     @Override
