@@ -75,6 +75,10 @@
     "code": "PUPM01",
     "name": "update permit",
     "description": "Permit for update permit"
+  },
+  {
+    "code": "PRSL01",
+    "name": "read salary log",
+    "description": "Permit for read salary logs"
   }
-
 ]

@@ -4,13 +4,11 @@ import com.proyect.employee.employee.dtos.create.CreateRoleDto;
 import com.proyect.employee.employee.dtos.create.CreateUserDto;
 import com.proyect.employee.employee.dtos.decorators.interfaces.NoDuplicates;
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +33,10 @@ public class UpdateUserDto extends CreateUserDto {
 
     @Nullable
     private Boolean isActive;
+
+    @Nullable
+    @Positive(groups = ValidatedUser.class)
+    private BigDecimal salary;
 
     @Nullable
     @NoDuplicates(groups = ValidatedUser.class)

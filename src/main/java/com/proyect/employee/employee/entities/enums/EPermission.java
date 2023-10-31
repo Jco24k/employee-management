@@ -22,7 +22,9 @@ public enum EPermission {
         DELETE_ROLE("PDR001"),
 
         READ_PERMIT("PRPM01"),
-        UPDATE_PERMIT("PUPM01");
+        UPDATE_PERMIT("PUPM01"),
+
+        READ_LOG_SALARY("PRSL01");
 
         private final String code;
         EPermission(String code) {

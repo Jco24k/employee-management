@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,10 @@ public class CreateUserDto {
 
     @Size(min = 1,max = 30,groups = ValidatedUser.class)
     private String lastName;
+
+    @NotNull(message = "salary must not be null")
+    @Min(1)
+    private BigDecimal salary;
 
     @Nullable()
     @NoDuplicates()

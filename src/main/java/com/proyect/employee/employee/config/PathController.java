@@ -5,4 +5,5 @@ public interface PathController {
     String ROLE = "/role";
     String PERMISSION = "/permission";
     String AUTH = "/auth";
+    String LOGS = "/log";
 }

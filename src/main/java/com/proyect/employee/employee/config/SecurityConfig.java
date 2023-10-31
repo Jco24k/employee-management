@@ -48,6 +48,8 @@ public class SecurityConfig {
                         .requestMatchers(PATCH, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.UPDATE_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
                         .requestMatchers(DELETE, String.format("%s/**",PathController.ROLE)).hasAnyAuthority(EPermission.DELETE_ROLE.getCode(), EPermission.SUPER_ADMIN.getCode())
 
+                        .requestMatchers(GET, String.format("%s/salary",PathController.LOGS)).hasAnyAuthority(EPermission.READ_LOG_SALARY.getCode(), EPermission.SUPER_ADMIN.getCode())
+
                         .requestMatchers(POST,String.format("%s/**",PathController.AUTH)).permitAll()
 
                         .requestMatchers("/doc/**","/swagger-ui/**","/v3/**").permitAll()

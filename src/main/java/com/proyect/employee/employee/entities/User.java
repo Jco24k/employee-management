@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,6 +38,9 @@ public class User implements Serializable {
     @Column(name = "last_name",length = 30)
     private String lastName;
 
+    @Column(nullable = false, columnDefinition="Decimal(10,2)")
+    private BigDecimal salary;
+
     @Column(length = 60,nullable = false)
     private String password;
 
@@ -52,12 +55,20 @@ public class User implements Serializable {
     @JsonManagedReference
     private Set<Role> roles = new HashSet<>();
 
-    public User(String username, String password,String name,String lastName,Set<Role> roles){
+    public User(String username, String password,String name,String lastName,Set<Role> roles, BigDecimal salary){
         this.username = username;
         this.password = password;
         this.name = name;
         this.lastName = lastName;
         this.roles = roles;
+        this.salary = salary;
+    }
+
+    public User(String username, String password,String name,String lastName){
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
     }
     @PrePersist()
     private void insert(){

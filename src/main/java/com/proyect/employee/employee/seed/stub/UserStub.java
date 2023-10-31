@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Service
@@ -24,7 +25,8 @@ public class UserStub {
                 passwordEncoder.encode(password),
                 faker.name().firstName(),
                 faker.name().lastName(),
-                roles
+                roles,
+                new BigDecimal(faker.number().randomNumber())
         );
     }
 
@@ -35,7 +37,8 @@ public class UserStub {
                 passwordEncoder.encode(DEFAULT_PASSWORD),
                 faker.name().firstName(),
                 faker.name().lastName(),
-                roles
+                roles,
+                 new BigDecimal(faker.number().randomNumber())
         );
     }
 }
